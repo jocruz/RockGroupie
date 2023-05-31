@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2022-11-15",
 });
@@ -7,21 +8,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { address, customerId } = req.body;
 
-  const amount = 10000;
-
   try {
-    const payment_intent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: "usd",
-      description: "Payment description",
-      customer: customerId, // Attach the customer ID
-      automatic_payment_methods: {
-        enabled: true,
-      },
-      metadata: { address },
+    const customer = await stripe.customers.update(customerId, {
+      metadata: {
+        address
+      }
     });
 
-    return res.status(200).json(payment_intent);
+    // Return the updated customer ID in the response
+    return res.status(200).json({ updatedCustomerId: customer.id });
   } catch (err) {
     const errorMessage =
       err instanceof Error ? err.message : "Internal server error";

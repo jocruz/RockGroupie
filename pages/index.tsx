@@ -21,8 +21,12 @@ const Home: NextPage = () => {
   const address = useAddress();
   const connectWithMagic = useMagic();
   const [email, setEmail] = useState<string>("");
-  const { contract } = useContract(EDITION_ADDRESS, "edition");
-  const { data: nft } = useNFT(contract, 0);
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [customerId, setCustomerId] = useState<string>("");
+  const { contract } = useContract(EDITION_ADDRESS, "signature-drop");
+  const { data: nft, error } = useNFT(contract, 2);
   const [clientSecret, setClientSecret] = useState("");
 
   const stripe = loadStripe(
@@ -40,20 +44,65 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    if (address) {
+    if (address && customerId) {
+      // Call /api/stripe_intent
       fetch("/api/stripe_intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           address,
+          customerId,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
           setClientSecret(data.client_secret);
         });
+
+      // Call /api/update_customer
+      fetch("/api/update_customer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address,
+          customerId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // You can handle response here, if needed.
+        });
     }
-  }, [address]);
+  }, [address, customerId]);
+
+
+  const handleLogin = () => {
+    if (firstName && lastName && phoneNumber && email) {
+      fetch("/api/create_customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          phoneNumber,
+          email,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.customerId) {
+            setCustomerId(data.customerId);
+            connectWithMagic({ email });
+          }
+        })
+        .catch((error) => {
+          // Handle any errors that occur during the API call
+          console.error("Error creating customer:", error);
+        });
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -64,10 +113,10 @@ const Home: NextPage = () => {
             {nft?.metadata && (
               <ThirdwebNftMedia
                 metadata={nft?.metadata}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 300, height: 300 }}
               />
             )}
-            <h2>{nft?.metadata?.name}</h2>
+            <h2>{nft?.metadata.name}</h2>
             <p>{nft?.metadata?.description}</p>
             <p>Price: 100$</p>
           </div>
@@ -83,7 +132,7 @@ const Home: NextPage = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              connectWithMagic({ email });
+              handleLogin();
             }}
             style={{
               width: 500,
@@ -91,10 +140,28 @@ const Home: NextPage = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              flexDirection: "row",
+              flexDirection: "column",
               gap: 16,
             }}
           >
+            <input
+              type="text"
+              placeholder="First Name"
+              className={styles.inputField}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className={styles.inputField}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              className={styles.inputField}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
             <input
               type="email"
               placeholder="Your Email Address"

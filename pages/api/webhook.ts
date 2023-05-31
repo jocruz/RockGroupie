@@ -25,7 +25,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     "mumbai"
   );
 
-  const nftCollection = await sdk.getContract(EDITION_ADDRESS, "edition");
+
+  const nftCollection = await sdk.getContract(EDITION_ADDRESS, "signature-drop");
 
   let event;
 
@@ -37,15 +38,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const data = JSON.parse(String(buf));
-
     if (event.type === "payment_intent.succeeded") {
+      console.log("PaymentIntent succeeded event triggered.");
       const paymentMethod = event.data.object as any;
-      const address = paymentMethod.metadata.address;
-
-      const tx = await nftCollection.erc1155.mintAdditionalSupplyTo(
+      const address = paymentMethod.metadata.address; 
+      const quantity = 1
+      const tx = await nftCollection.erc721.claimTo(
         address,
-        0,
-        1
+        quantity
       );
 
       console.log(tx);
