@@ -8,6 +8,7 @@ import {
   ThirdwebNftMedia,
   useAddress,
   useContract,
+  useDisconnect,
   useNFT,
 } from "@thirdweb-dev/react";
 import { useMagic } from "@thirdweb-dev/react/evm/connectors/magic";
@@ -20,6 +21,7 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const address = useAddress();
   const connectWithMagic = useMagic();
+  const disconnect = useDisconnect();
   const [email, setEmail] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -42,8 +44,14 @@ const Home: NextPage = () => {
     clientSecret,
     appearance,
   };
+    // This useEffect will run once when the component mounts
+    useEffect(() => {
+      disconnect();
+      localStorage.clear(); 
+    }, []); // Note the empty dependency array
 
   useEffect(() => {
+    // disconnect();
     if (address && customerId) {
       // Call /api/stripe_intent
       fetch("/api/stripe_intent", {

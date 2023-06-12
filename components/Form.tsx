@@ -6,7 +6,6 @@ import {
 import styles from "../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import { EDITION_ADDRESS } from "../constants/addresses";
-
 const Form = () => {
   const elements = useElements();
   const stripe = useStripe();
