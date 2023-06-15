@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const sdk = ThirdwebSDK.fromPrivateKey(
     process.env.PRIVATE_KEY as string,
-    "mumbai"
+    "polygon"
   );
 
 

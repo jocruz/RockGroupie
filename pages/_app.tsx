@@ -4,13 +4,13 @@ import type { AppProps } from "next/app";
 import "../styles/globals.css";
 
 // This is the chainId your dApp will work on.
-const activeChainId = ChainId.Mumbai;
+const activeChainId = ChainId.Polygon;
 
 const magicLinkConnector = new MagicConnector({
   options: {
     apiKey: process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY as string,
     rpcUrls: {
-      [ChainId.Mumbai]: "https://rpc-mumbai.maticvigil.com",
+      [ChainId.Polygon]: "https://rpc-mainnet.matic.quiknode.pro",
     },
   },
 });

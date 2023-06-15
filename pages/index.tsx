@@ -116,7 +116,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       {address ? (
         <>
-          <p>You are signed in as: {address}</p>
+          <p>You are signed in as: {email}</p>
           <div className={styles.nftCard}>
             {nft?.metadata && (
               <ThirdwebNftMedia
@@ -124,9 +124,9 @@ const Home: NextPage = () => {
                 style={{ width: 300, height: 300 }}
               />
             )}
-            <h2>{nft?.metadata.name}</h2>
+            {/* <h2>{nft?.metadata.name}</h2> */}
             <p>{nft?.metadata?.description}</p>
-            <p>Price: 100$</p>
+            <p>Price: 1$</p>
           </div>
           {clientSecret && (
             <Elements options={options} stripe={stripe}>
