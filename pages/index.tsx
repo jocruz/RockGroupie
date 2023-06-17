@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import {
   Appearance,
@@ -13,10 +14,10 @@ import {
 } from "@thirdweb-dev/react";
 import { useMagic } from "@thirdweb-dev/react/evm/connectors/magic";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
 import Form from "../components/Form";
 import { EDITION_ADDRESS } from "../constants/addresses";
 import styles from "../styles/Home.module.css";
+import TermsAndConditions from "../components/TermsAndConditions";
 
 const Home: NextPage = () => {
   const address = useAddress();
@@ -44,14 +45,13 @@ const Home: NextPage = () => {
     clientSecret,
     appearance,
   };
-    // This useEffect will run once when the component mounts
-    useEffect(() => {
-      disconnect();
-      localStorage.clear(); 
-    }, []); // Note the empty dependency array
 
   useEffect(() => {
-    // disconnect();
+    disconnect();
+    localStorage.clear();
+  }, []);
+
+  useEffect(() => {
     if (address && customerId) {
       // Call /api/stripe_intent
       fetch("/api/stripe_intent", {
@@ -83,7 +83,6 @@ const Home: NextPage = () => {
     }
   }, [address, customerId]);
 
-
   const handleLogin = () => {
     if (firstName && lastName && phoneNumber && email) {
       fetch("/api/create_customer", {
@@ -106,15 +105,21 @@ const Home: NextPage = () => {
           }
         })
         .catch((error) => {
-          // Handle any errors that occur during the API call
           console.error("Error creating customer:", error);
         });
     }
   };
 
+  const [showTerms, setShowTerms] = useState(true);
+
+  const handleAcceptTerms = () => {
+    setShowTerms(false);
+  };
+
   return (
     <div className={styles.container}>
-      {address ? (
+      {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />}
+      {!showTerms && address ? (
         <>
           <p>You are signed in as: {email}</p>
           <div className={styles.nftCard}>
@@ -124,7 +129,6 @@ const Home: NextPage = () => {
                 style={{ width: 300, height: 300 }}
               />
             )}
-            {/* <h2>{nft?.metadata.name}</h2> */}
             <p>{nft?.metadata?.description}</p>
             <p>Price: 1$</p>
           </div>
