@@ -136,7 +136,7 @@ const Home: NextPage = () => {
         </>
       ) : (
         <>
-          <h2 style={{ fontSize: "1.3rem" }}>Login With Email</h2>
+          <h2 style={{ fontSize: "1.3rem" }}>Sign Up With Email</h2>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -177,7 +177,7 @@ const Home: NextPage = () => {
               style={{ width: "90%", marginBottom: 0 }}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button className={styles.mainButton}>Login</button>
+            <button className={styles.mainButton}>Sign Up</button>
           </form>
         </>
       )}
