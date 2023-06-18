@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const payment_intent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "usd",
-      description: "Payment description",
+      description: "Hidden Treasure LI Membership",
       customer: customerId, // Attach the customer ID
       automatic_payment_methods: {
         enabled: true,
