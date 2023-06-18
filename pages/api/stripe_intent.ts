@@ -15,9 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       currency: "usd",
       description: "Hidden Treasure LI Membership",
       customer: customerId, // Attach the customer ID
-      automatic_payment_methods: {
-        enabled: true,
-      },
+      payment_method_types: ['card'], // Only allow 'card' payment method
       metadata: { address },
     });
 

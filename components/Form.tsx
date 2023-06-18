@@ -98,7 +98,7 @@ const Form = () => {
 
       {showPaymentForm ? (
         <form className={styles.PaymentForm} onSubmit={handleSubmit}>
-          <PaymentElement />
+          <PaymentElement options={{paymentMethodOrder: ['card']}} />
           <button
             className={`${styles.mainButton} ${styles.payButton}`}
             disabled={isLoading || !stripe || !elements}
