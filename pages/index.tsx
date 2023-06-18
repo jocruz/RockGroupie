@@ -129,7 +129,10 @@ const Home: NextPage = () => {
                 style={{ width: 300, height: 300 }}
               />
             )}
-            <p>{nft?.metadata?.description}</p>
+<p className={`${styles.centeredText}`}>
+  Embark on a thrilling treasure hunt across Long Island's finest breweries. This digital treasure map will lead you on a quest, offering tantalizing beer flights as a reward and <span className={styles.boldText}>unforgettable memories as the treasure's sweet bounty!</span>
+</p>
+<p className={`${styles.limitText}`}>LIMITED TO ONE PURCHASE PER EMAIL ADDRESS</p>
             <p>Price: 1$</p>
           </div>
           {clientSecret && (

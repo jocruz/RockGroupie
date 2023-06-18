@@ -108,3 +108,17 @@
   background-color: #DFF2BF; */
 }
 
+.centeredText {
+  text-align: center;
+}
+
+.boldText {
+  font-weight: bold;
+}
+
+.limitText {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: larger;
+}
