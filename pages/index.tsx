@@ -31,6 +31,7 @@ const Home: NextPage = () => {
   const { contract } = useContract(EDITION_ADDRESS, "signature-drop");
   const { data: nft, error } = useNFT(contract, 2);
   const [clientSecret, setClientSecret] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
 
   const stripe = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -99,9 +100,13 @@ const Home: NextPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.customerId) {
-            setCustomerId(data.customerId);
-            connectWithMagic({ email });
+          if (data.alreadyPurchased) {
+            setMessage("This email has already been used for a successful purchase.");
+          } else {
+            if (data.customerId) {
+              setCustomerId(data.customerId);
+              connectWithMagic({ email });
+            }
           }
         })
         .catch((error) => {
@@ -119,6 +124,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />}
+      {message && <h2>{message}</h2>}
       {!showTerms && address ? (
         <>
           <p>You are signed in as: {email}</p>
