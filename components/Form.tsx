@@ -6,12 +6,14 @@ import {
 import styles from "../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import { EDITION_ADDRESS } from "../constants/addresses";
+
 const Form = () => {
   const elements = useElements();
   const stripe = useStripe();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<null | string | undefined>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(true);
 
   useEffect(() => {
     if (!stripe) {
@@ -30,10 +32,12 @@ const Form = () => {
       switch (paymentIntent?.status) {
         case "succeeded":
           setIsSuccess(true);
-          setMessage("Your payment was successfull!");
+          setMessage("Your payment was successful!");
+          setShowPaymentForm(false);
           break;
         case "processing":
           setMessage("Your payment is processing.");
+          setShowPaymentForm(false);
           break;
         case "requires_payment_method":
           setMessage("Your payment was not successful, please try again.");
@@ -65,8 +69,10 @@ const Form = () => {
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
+      setShowPaymentForm(false); // hide the form
     } else {
-      setMessage("An unexpected error occured.");
+      setMessage("An unexpected error occurred.");
+      setShowPaymentForm(false); // hide the form
     }
 
     setIsLoading(false);
@@ -88,7 +94,9 @@ const Form = () => {
           )}
           <h1>{message}</h1>
         </>
-      ) : (
+      ) : null}
+
+      {showPaymentForm ? (
         <form className={styles.PaymentForm} onSubmit={handleSubmit}>
           <PaymentElement />
           <button
@@ -98,6 +106,13 @@ const Form = () => {
             <span>{isLoading ? "Loading..." : "Pay now"}</span>
           </button>
         </form>
+      ) : (
+        <button
+          className={`${styles.mainButton} ${styles.payButton}`}
+          onClick={() => setShowPaymentForm(true)}
+        >
+          Try again
+        </button>
       )}
     </>
   );
