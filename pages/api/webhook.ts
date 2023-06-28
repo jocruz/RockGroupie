@@ -25,7 +25,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     "polygon"
   );
 
-
   const nftCollection = await sdk.getContract(EDITION_ADDRESS, "signature-drop");
 
   let event;
@@ -37,11 +36,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).send(`Webhook Error: ${(err as Error).message}`);
     }
 
-    const data = JSON.parse(String(buf));
     if (event.type === "payment_intent.succeeded") {
+      // Retrieve the payment intent again from Stripe
+      const paymentIntent = await stripe.paymentIntents.retrieve((event.data.object as Stripe.PaymentIntent).id);
+
+      if (paymentIntent.status !== 'succeeded') {
+        // If the payment intent's status is not 'succeeded', then don't transfer the NFT and just return a response.
+        return res.json({ received: true, message: 'Payment not successful, no NFT transferred' });
+      }
+
       console.log("PaymentIntent succeeded event triggered.");
-      const paymentMethod = event.data.object as any;
-      const address = paymentMethod.metadata.address; 
+      const paymentMethod = event.data.object as Stripe.PaymentIntent;
+      const address = paymentMethod.metadata.address;
       const quantity = 1
       const tx = await nftCollection.erc721.claimTo(
         address,
@@ -49,10 +55,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
 
       console.log(tx);
-
-      console.log(
-        `PaymentIntent was successfull for: ${data.data.object.amount}`
-      );
+      console.log(`PaymentIntent was successful for: ${paymentIntent.amount}`);
     }
   }
   return res.json({ received: true });
