@@ -10,7 +10,7 @@ const magicLinkConnector = new MagicConnector({
   options: {
     apiKey: process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY as string,
     rpcUrls: {
-      [ChainId.Polygon]: "https://rpc-mainnet.matic.quiknode.pro",
+      [ChainId.Polygon]: "https://polygon-rpc.com",
     },
   },
 });
