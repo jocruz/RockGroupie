@@ -139,7 +139,7 @@ const Home: NextPage = () => {
   Embark on a thrilling treasure hunt across Long Island's finest breweries. This digital treasure map will lead you on a quest, offering tantalizing beer flights as a reward and <span className={styles.boldText}>unforgettable memories as the treasure's sweet bounty!</span>
 </p>
 <p className={`${styles.limitText}`}>LIMITED TO ONE PURCHASE PER EMAIL ADDRESS</p>
-            <p>Price: 1$</p>
+            <p>Price: 150$</p>
           </div>
           {clientSecret && (
             <Elements options={options} stripe={stripe}>
