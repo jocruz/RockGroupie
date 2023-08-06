@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const payment_intent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "usd",
-      description: "Hidden Treasure LI Membership",
+      description: "Rock Groupies Membership",
       customer: customerId, // Attach the customer ID
       payment_method_types: ['card'], // Only allow 'card' payment method
       metadata: { address },

@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const charges = await stripe.charges.list({ customer: customerId });
 
       // Check if any of the charges were successful and have the right description
-      alreadyPurchased = charges.data.some(charge => charge.paid && charge.description === "Hidden Treasure LI Membership");
+      alreadyPurchased = charges.data.some(charge => charge.paid && charge.description === "Rock Groupies Membership");
     } else {
       // If not, create a new customer
       const customer = await stripe.customers.create({
