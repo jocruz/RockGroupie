@@ -42,11 +42,11 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onAccept }) => 
           overflow: "auto",
         }}
       >
-        <h2 style={{ color: "#CDA434", fontFamily: "Calibri", textAlign: "center" }}>Terms and Conditions</h2>
-        <p style={{ color: "#CDA434", fontFamily: "Calibri" }}>
+        <h2 style={{ color: "#00d084", fontFamily: "Calibri", textAlign: "center" }}>Terms and Conditions</h2>
+        <p style={{ color: "#00d084", fontFamily: "Calibri" }}>
           Please read these terms and conditions carefully before using our website and making a purchase. By accessing or using our website, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, please do not proceed further.
         </p>
-        <ol style={{ color: "#CDA434", fontFamily: "Calibri" }}>
+        <ol style={{ color: "#00d084", fontFamily: "Calibri" }}>
           <li>
             <strong>Responsibility for Drinking:</strong> We want to make it clear that we are not responsible for any consequences or actions related to your drinking habits. Consuming alcoholic beverages is a personal choice, and it is your responsibility to drink responsibly and in accordance with the legal drinking age in your jurisdiction.
           </li>
@@ -73,7 +73,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onAccept }) => 
           onClick={handleAccept}
           style={{
             color: "black",
-            background: "gold",
+            background: "#dcd9cd",
             border: "none",
             padding: "8px 16px",
             borderRadius: "4px",
