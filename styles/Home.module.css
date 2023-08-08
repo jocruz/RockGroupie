@@ -43,7 +43,7 @@
   min-width: 3rem;
   font-size: 1rem;
   background: #e5e5ea;
-  background-image: linear-gradient(to left, #cc25b3 0%, #418dff 101.52%);
+  background-image: linear-gradient(to left, #43cea2  0%, #185a9d 101.52%);
   color: #fff;
   width: 180px;
   text-align: center;
@@ -59,9 +59,9 @@
 .textInput {
   width: 75%;
   background-color: transparent;
-  border: 1px solid grey;
+  border: 1px solid #198754;
   border-radius: 8px;
-  color: #fff;
+  color: #198754;
   height: 48px;
   padding: 0 16px;
   font-size: 1rem;
@@ -94,8 +94,8 @@
 .inputField {
   width: 90%;
   padding: 10px;
-  border: 1px solid gray;
-  color: #fff;
+  border: 1px solid #198754;
+  color: #198754;
   border-radius: 4px;
   margin-bottom: 10px;
   font-size: 1rem;

@@ -38,7 +38,7 @@ const Home: NextPage = () => {
   );
 
   const appearance: Appearance = {
-    theme: "night",
+    theme: "stripe",
     labels: "above",
   };
 
