@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { address, customerId } = req.body;
 
-  const amount = 15000;
+  const amount = 50;
 
   try {
     const payment_intent = await stripe.paymentIntents.create({
