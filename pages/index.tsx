@@ -115,17 +115,17 @@ const Home: NextPage = () => {
     }
   };
 
-  const [showTerms, setShowTerms] = useState(true);
+  // const [showTerms, setShowTerms] = useState(true);
 
-  const handleAcceptTerms = () => {
-    setShowTerms(false);
-  };
+  // const handleAcceptTerms = () => {
+  //   setShowTerms(false);
+  // };
 
   return (
     <div className={styles.container}>
       {/* {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />} */}
       {message && <h2>{message}</h2>}
-      {!showTerms && address ? (
+      { address ? (
         <>
           <p>You are signed in as: {email}</p>
           <div className={styles.nftCard}>
