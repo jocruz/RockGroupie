@@ -137,7 +137,7 @@ const Home: NextPage = () => {
             )}
 <p className={`${styles.centeredText}`}>Step into the world of the Rock Groupies, where electrifying riffs and soul-stirring melodies converge, creating a tight-knit community of passionate souls who live and breathe the essence of rock music. Being a Rock Groupie means immersing yourself in a culture that celebrates the timeless allure of guitars, powerful vocals, and the profound impact of rock in shaping generations. Join us on a musical journey that transcends boundaries, unleashing the sheer energy and emotion that only rock can deliver, uniting hearts and spirits in an unbreakable bond of rock 'n' roll camaraderie.</p>
 <p className={`${styles.limitText}`}>LIMITED TO ONE PURCHASE PER EMAIL ADDRESS</p>
-            <p>Price: 150$</p>
+            <p>Price: 50&cent;</p>
           </div>
           {clientSecret && (
             <Elements options={options} stripe={stripe}>
