@@ -17,7 +17,7 @@ import type { NextPage } from "next";
 import Form from "../components/Form";
 import { EDITION_ADDRESS } from "../constants/addresses";
 import styles from "../styles/Home.module.css";
-import TermsAndConditions from "../components/TermsAndConditions";
+// import TermsAndConditions from "../components/TermsAndConditions";
 
 const Home: NextPage = () => {
   const address = useAddress();
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />}
+      {/* {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />} */}
       {message && <h2>{message}</h2>}
       {!showTerms && address ? (
         <>
@@ -147,7 +147,7 @@ const Home: NextPage = () => {
         </>
       ) : (
         <>
-          <h2 style={{ fontSize: "1.6rem", textAlign: "center" }}>Sign Up With Email For The Classic Rock Groupie</h2>
+          <h2 style={{ fontSize: "1.6rem", textAlign: "center" }}>Sign Up With Email For The Reggae Groupie</h2>
           <form
             onSubmit={(e) => {
               e.preventDefault();
