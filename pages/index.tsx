@@ -9,7 +9,7 @@ import {
   ThirdwebNftMedia,
   useAddress,
   useContract,
-  useLogout,
+  useDisconnect,
   useNFT,
 } from "@thirdweb-dev/react";
 // import { useMagic } from "@thirdweb-dev/react/evm/connectors/magic";
@@ -23,7 +23,7 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const address = useAddress();
   // const connectWithMagic = useMagic();
-  const disconnect = useLogout();
+  const disconnect = useDisconnect();
   const [email, setEmail] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    useLogout();
+    disconnect();
     localStorage.clear();
   }, []);
 
