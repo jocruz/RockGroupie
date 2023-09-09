@@ -9,10 +9,11 @@ import {
   ThirdwebNftMedia,
   useAddress,
   useContract,
-  useDisconnect,
+  useLogout,
   useNFT,
 } from "@thirdweb-dev/react";
-import { useMagic } from "@thirdweb-dev/react/evm/connectors/magic";
+// import { useMagic } from "@thirdweb-dev/react/evm/connectors/magic";
+import { magicLink } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
 import Form from "../components/Form";
 import { EDITION_ADDRESS } from "../constants/addresses";
@@ -21,8 +22,8 @@ import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const address = useAddress();
-  const connectWithMagic = useMagic();
-  const disconnect = useDisconnect();
+  // const connectWithMagic = useMagic();
+  const disconnect = useLogout();
   const [email, setEmail] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -32,6 +33,10 @@ const Home: NextPage = () => {
   const { data: nft, error } = useNFT(contract, 2);
   const [clientSecret, setClientSecret] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const wallet = magicLink({
+    apiKey:  process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY as string,
+    type: 'auth' // or 'connect'
+  });
 
   const stripe = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -48,7 +53,7 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    disconnect();
+    useLogout();
     localStorage.clear();
   }, []);
 
@@ -84,7 +89,7 @@ const Home: NextPage = () => {
     }
   }, [address, customerId]);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (firstName && lastName && phoneNumber && email) {
       fetch("/api/create_customer", {
         method: "POST",
@@ -99,13 +104,13 @@ const Home: NextPage = () => {
         }),
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then(async(data) => {
           if (data.alreadyPurchased) {
             setMessage("This email has already been used for a successful purchase.");
           } else {
             if (data.customerId) {
               setCustomerId(data.customerId);
-              connectWithMagic({ email });
+              await wallet.connect({ email });
             }
           }
         })
@@ -115,15 +120,8 @@ const Home: NextPage = () => {
     }
   };
 
-  // const [showTerms, setShowTerms] = useState(true);
-
-  // const handleAcceptTerms = () => {
-  //   setShowTerms(false);
-  // };
-
   return (
     <div className={styles.container}>
-      {/* {showTerms && <TermsAndConditions onAccept={handleAcceptTerms} />} */}
       {message && <h2>{message}</h2>}
       { address ? (
         <>

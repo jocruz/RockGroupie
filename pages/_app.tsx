@@ -1,28 +1,26 @@
-import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
-import { MagicConnector } from "@thirdweb-dev/react/evm/connectors/magic";
+import { ChainId, ThirdwebProvider, magicLink } from "@thirdweb-dev/react";
+
+
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 
 // This is the chainId your dApp will work on.
 const activeChainId = ChainId.Polygon;
 
-const magicLinkConnector = new MagicConnector({
-  options: {
-    apiKey: process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY as string,
-    rpcUrls: {
-      [ChainId.Polygon]: "https://polygon-rpc.com",
-    },
-  },
+const magicLinkConfig = magicLink({
+  apiKey:  process.env.NEXT_PUBLIC_MAGIC_LINK_API_KEY as string,
+  type: 'auth' // or 'connect'
 });
 
 // Array of wallet connectors you want to use for your dApp.
-const connectors = [magicLinkConnector];
+// const connectors = [magicLinkConfig];
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider
       activeChain={activeChainId}
-      walletConnectors={connectors}
+      supportedWallets={[magicLinkConfig]}
+      clientId="6f3fc71c09d5983422144ba63b9adaef"
     >
       <Component {...pageProps} />
     </ThirdwebProvider>
