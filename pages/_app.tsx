@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThirdwebProvider
       activeChain={activeChainId}
       supportedWallets={[magicLinkConfig]}
-      clientId="6f3fc71c09d5983422144ba63b9adaef"
+      clientId= {process.env.THIRDWEB_CLIENT as string}
     >
       <Component {...pageProps} />
     </ThirdwebProvider>

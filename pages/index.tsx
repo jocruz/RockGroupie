@@ -57,11 +57,11 @@ const Home: NextPage = () => {
     disconnect();
     localStorage.clear();
   }, []);
-  useEffect(() => {
-    console.log('NFT Data:', nft);
-    console.log('Error:', error);
-    console.log('Contract address:', contract?.contractWrapper.address);
-  }, [nft, error]);
+  // useEffect(() => {
+  //   console.log('NFT Data:', nft);
+  //   console.log('Error:', error);
+  //   console.log('Contract address:', contract?.contractWrapper.address);
+  // }, [nft, error]);
 
   useEffect(() => {
     if (address && customerId) {
