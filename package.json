@@ -29,7 +29,7 @@
     "typescript": "^4.9.4"
   },
   "resolutions": {
-    "@thirdweb-dev/react-core": "~3.10.0",
-    "@thirdweb-dev/auth": "3.0.7"
+    "@thirdweb-dev/react-core": "3.14.40",
+    "@thirdweb-dev/auth": "3.2.40"
   }
 }
